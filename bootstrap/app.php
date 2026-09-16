@@ -22,6 +22,11 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             return route('user.login');
         });
+
+        $middleware->validateCsrfTokens(except: [
+            '/nagad/callback',
+            '/dgepay/callback',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

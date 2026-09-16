@@ -223,8 +223,9 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->name('user.')->group(f
     Route::post('/dgepay/pay', [DgepayController::class, 'pay'])->name('dgepay.pay');
 });
 
-// পেমেন্ট শেষে Nagad যে কলব্যাক দেবে (Guest / Web accessible)
+// পেমেন্ট শেষে Nagad / DGePay যে কলব্যাক দেবে (Guest / Web accessible)
 Route::get('/nagad/callback', [NagadPaymentController::class, 'callback'])->name('nagad.callback');
+Route::match(['get', 'post'], '/dgepay/callback', [DgepayController::class, 'callback'])->name('dgepay.callback');
 
 Route::get('/clear', function () {
     Artisan::call('cache:forget spatie.permission.cache');
